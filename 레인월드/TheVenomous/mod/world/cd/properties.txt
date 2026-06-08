@@ -1,0 +1,7 @@
+Start room: CD_GATE_FG
+Subregion: Acid Sumps
+Palette night: toxic blue-green
+Palette day: pale rainwater yellow
+Role night: empowered acid route
+Role day: lethal flood detour
+

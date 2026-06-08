@@ -1,0 +1,13 @@
+// Shadow Canopy
+// Lower World Tree region where roots consume the old city.
+// Night ascent: low visibility, vibration-hunting centipedes, flash lizards.
+// Day descent: brighter and fruit-rich, but still rugged and time-sensitive.
+ROOMS
+// SC_GATE_RSG : gate from Rusted Sky Garden
+// SC_A01 : darkness introduction
+// SC_A02 : pincer centipede stealth room
+// SC_A03 : flash lizard ambush room
+// SC_A04 : World Tree trunk climb
+// SC_GATE_HN : gate to The Heart of Namu
+END ROOMS
+

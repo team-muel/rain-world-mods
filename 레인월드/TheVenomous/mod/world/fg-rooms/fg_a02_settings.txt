@@ -1,0 +1,14 @@
+Template: NONE
+DangerType: FloodAndRain
+CeilingDrips: 0.35
+Clouds: 0.18
+Grime: 0.42
+BkgDroneVolume: 0.18
+RandomItemDensity: 0
+EffectColorA: 2
+EffectColorB: 6
+Effects: Flies-0.18-20-20, 
+PlacedObjects: DangleFruit><680><380><0~0~2~3, DangleFruit><760><395><0~0~2~3, DangleFruit><920><360><0~0~2~3, InsectGroup><1120><330><-180~120~220~60~StandardFly~0.35, InsectGroup><1460><250><-160~140~0~0~StandardFly~0.25, 
+AmbientSounds: OMNI><AM_ENV-Outside.ogg><850><500><0.25><0.75, OMNI><AM_ENV-LightWind.ogg><1200><430><0.22><0.7, OMNI><SO_WAT-ProperDrips.ogg><540><360><0.18><0.8, 
+FadePalette: 8, 0.36, 0.30, 0.28
+RoomSpecificScriptActive: OFF

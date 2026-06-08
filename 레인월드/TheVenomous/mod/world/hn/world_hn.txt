@@ -1,0 +1,11 @@
+// The Heart of Namu
+// Final World Tree processor where puppet machinery and nature fuse.
+// Main mechanic: broken gravity control, floating vine movement, final cancerous plant core event.
+ROOMS
+// HN_GATE_SC : lower gate from Shadow Canopy
+// HN_A01 : zero-gravity vine swim
+// HN_A02 : puppet processor chamber
+// HN_CORE : final tumor-mother encounter
+// HN_RETURN : post-purification return start
+END ROOMS
+

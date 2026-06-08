@@ -1,0 +1,25 @@
+// Forgotten Greenhouse
+// Start region for The Venomous, later planned as the final return greenhouse.
+// Current pass is documentation and route intent only. Final room art and terrain come later.
+// Tutorial order: safe shelter -> food pressure and low movement -> venom spear combat choice.
+// Venomous design note: hunger is venom storage, so food placement also teaches ability resource management.
+ROOMS
+// FG_A01: start shelter. One right exit, two fruits, no danger, safe control check.
+FG_A01 : FG_A02 : SHELTER
+// FG_A02: food and movement tutorial. Left/right route, three fruits, two StandardFly groups.
+FG_A02 : FG_A01, FG_A03
+// FG_A03: venom spear tutorial. Two spears, one weak Pink Lizard, bypass pipe planned in room art pass.
+FG_A03 : FG_A02
+// FG_GATE_CD : planned gate route to Corroded Drainage Complex.
+END ROOMS
+
+CREATURES
+// Weak tutorial predator for FG_A03 only. Keep FG_A01 and FG_A02 predator-free.
+FG_A03 : 2-Pink
+END CREATURES
+
+BAT MIGRATION BLOCKAGES
+END BAT MIGRATION BLOCKAGES
+
+// Planned later rooms:
+// FG_GATE_CD : gate room to Corroded Drainage Complex.

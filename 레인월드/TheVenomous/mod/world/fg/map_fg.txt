@@ -1,0 +1,9 @@
+// Active tutorial route:
+// FG_A01 -> FG_A02 -> FG_A03
+//
+// FG_A01: safe start shelter.
+// FG_A02: food pressure and low-platform movement tutorial.
+// FG_A03: venom spear tutorial with one weak Pink Lizard and a planned bypass pipe.
+//
+// Planned expansion route:
+// FG_A01 -> FG_A02 -> FG_A03 -> FG_GATE_CD

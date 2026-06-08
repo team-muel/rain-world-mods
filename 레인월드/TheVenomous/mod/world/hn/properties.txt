@@ -1,0 +1,7 @@
+Start room: HN_GATE_SC
+Subregion: Central Arboreal Processor
+Palette night: sterile white and sap green
+Palette day: overexposed purification
+Role night: zero-gravity finale
+Role day: purification trigger and return start
+

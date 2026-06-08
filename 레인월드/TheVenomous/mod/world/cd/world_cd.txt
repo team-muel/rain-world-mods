@@ -1,0 +1,14 @@
+// Corroded Drainage Complex
+// Gimmick reversal region.
+// Night ascent: acid is safe for The Venomous and refills venom spear crafting.
+// Day descent: rainwater mixes with waste into lethal poison, forcing plant-maze detours.
+ROOMS
+// CD_GATE_FG : lower gate from Forgotten Greenhouse
+// CD_A01 : acid pool empowerment room
+// CD_A02 : ceiling pipe traversal
+// CD_A03 : night bonus route
+// CD_D01 : day-only plant detour
+// CD_D02 : lethal water time-attack bypass
+// CD_GATE_RSG : upper gate to Rusted Sky Garden
+END ROOMS
+

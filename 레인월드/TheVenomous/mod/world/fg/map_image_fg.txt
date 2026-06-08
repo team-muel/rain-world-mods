@@ -1,0 +1,2 @@
+// Map image skeleton for Forgotten Greenhouse.
+

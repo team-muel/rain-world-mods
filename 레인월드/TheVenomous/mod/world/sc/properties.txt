@@ -1,0 +1,7 @@
+Start room: SC_GATE_RSG
+Subregion: Root-Choked Ruins
+Palette night: near-black jungle
+Palette day: sun shafts and heavy fruit
+Role night: stealth horror climb
+Role day: fast hazardous crossing
+

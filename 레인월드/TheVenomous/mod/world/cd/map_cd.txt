@@ -1,0 +1,3 @@
+// Night: CD_GATE_FG -> CD_A01 -> CD_A02 -> CD_A03 -> CD_GATE_RSG
+// Day: CD_GATE_RSG -> CD_D02 -> CD_D01 -> CD_GATE_FG
+

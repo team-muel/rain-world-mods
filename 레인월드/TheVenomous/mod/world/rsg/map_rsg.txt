@@ -1,0 +1,3 @@
+// Night: RSG_GATE_CD -> RSG_A01 -> RSG_A02 -> RSG_A03 -> RSG_GATE_SC
+// Day: RSG_GATE_SC -> RSG_D01 -> RSG_A03 -> RSG_GATE_CD
+

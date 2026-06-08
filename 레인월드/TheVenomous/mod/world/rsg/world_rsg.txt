@@ -1,0 +1,13 @@
+// Rusted Sky Garden
+// Mid-late vertical ruin of towers, bridges, and vines.
+// Night ascent: inverted traversal under iron beams prevents falling.
+// Day descent: wall cling is gone, but windflower vines allow gliding across gaps.
+ROOMS
+// RSG_GATE_CD : lower gate from Corroded Drainage Complex
+// RSG_A01 : narrow tower ledges
+// RSG_A02 : inverted bridge crossing
+// RSG_A03 : high wind gap
+// RSG_D01 : windflower glider tutorial
+// RSG_GATE_SC : upper gate to Shadow Canopy
+END ROOMS
+

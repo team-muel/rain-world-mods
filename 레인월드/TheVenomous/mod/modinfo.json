@@ -1,0 +1,10 @@
+{
+  "id": "stwam.starter",
+  "name": "The Venomous",
+  "version": "0.4.3",
+  "authors": "Stwam",
+  "description": "Campaign skeleton for The Venomous with five planned regions, a custom slugcat slot, tailored stats, venom spear mechanics, poisoned prey curing, and night/day route reversal.",
+  "requirements": [],
+  "requirements_names": [],
+  "tags": ["Game Mechanics", "Base"]
+}

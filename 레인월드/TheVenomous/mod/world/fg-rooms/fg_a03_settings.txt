@@ -1,0 +1,14 @@
+Template: NONE
+DangerType: FloodAndRain
+CeilingDrips: 0.22
+Clouds: 0.08
+Grime: 0.58
+BkgDroneVolume: 0.28
+RandomItemDensity: 0
+EffectColorA: 1
+EffectColorB: 6
+Effects: Flies-0.04-20-20, 
+PlacedObjects: ReliableSpear><780><210><, ReliableSpear><900><210><, CustomDecal><1220><185><-20~160~320~160~300~-8~-240~-120~0.35~0.7~0~WhiteTag~0.35~0.8~0.35~0.8~0.2~0.8~0.05~0.8, CustomDecal><1500><170><-30~260~420~240~390~-12~-280~-160~0.28~0.65~0~RustB2~0.45~0.45~0.45~0.45~0.2~0.45~0.05~0.45, 
+AmbientSounds: OMNI><AM_ENV-Industrial.ogg><1050><320><0.18><0.7, OMNI><SO_WAT-ProperDrips.ogg><560><310><0.20><0.9, 
+FadePalette: 8, 0.31, 0.28, 0.25
+RoomSpecificScriptActive: OFF

@@ -1,0 +1,3 @@
+// HN_GATE_SC -> HN_A01 -> HN_A02 -> HN_CORE
+// After purification: HN_CORE -> HN_RETURN -> SC_GATE_HN
+

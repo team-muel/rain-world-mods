@@ -1,0 +1,6 @@
+Start room: FG_A01
+Subregion: Broken Domes
+Palette night: humid green
+Palette day: golden overgrowth
+Role night: tutorial ascent
+Role day: final peaceful homecoming

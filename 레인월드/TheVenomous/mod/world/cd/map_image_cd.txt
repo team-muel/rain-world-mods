@@ -1,0 +1,2 @@
+// Map image skeleton for Corroded Drainage Complex.
+

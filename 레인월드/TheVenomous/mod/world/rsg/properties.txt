@@ -1,0 +1,7 @@
+Start room: RSG_GATE_CD
+Subregion: Hanging Bridges
+Palette night: black iron and violet sky
+Palette day: warm vapor and pale green vines
+Role night: ceiling traversal showcase
+Role day: windflower gliding return
+
