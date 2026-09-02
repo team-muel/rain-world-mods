@@ -1,0 +1,10 @@
+*.bak
+*.bak2
+*.bak3
+*.user-backup-*
+*.before-*
+*.patchin.dll
+*.patchout.dll
+bin/
+obj/
+.vs/
