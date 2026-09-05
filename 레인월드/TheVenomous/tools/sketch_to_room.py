@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import sys
 from collections import deque
 from dataclasses import asdict, dataclass
@@ -27,6 +28,7 @@ from PIL import Image, ImageDraw
 
 VENOMOUS_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_ROOT = VENOMOUS_ROOT / "drafts"
+ROOM_NAME_PATTERN = re.compile(r"^[A-Z0-9_]+$")
 
 
 @dataclass
@@ -54,6 +56,29 @@ PREVIEW_COLORS = {
     "exit": (255, 145, 20, 235),
     "entrance": (35, 190, 70, 235),
 }
+
+# Sketch lines often touch diagonally after sampling. Eight-way connectivity keeps
+# one hand-drawn feature together instead of splitting it into several fragments.
+NEIGHBORS = (
+    (1, 0),
+    (-1, 0),
+    (0, 1),
+    (0, -1),
+    (1, 1),
+    (1, -1),
+    (-1, 1),
+    (-1, -1),
+)
+
+
+def normalize_room_name(room: str) -> str:
+    cleaned = room.strip().upper().replace("-", "_")
+    if not cleaned or ROOM_NAME_PATTERN.fullmatch(cleaned) is None:
+        raise ValueError(
+            "room name must contain only letters, numbers, and underscores "
+            "(example: FG_A04)"
+        )
+    return cleaned
 
 
 def classify_pixel(r: int, g: int, b: int, alpha: int) -> str | None:
@@ -119,7 +144,9 @@ def find_components(class_map: list[list[str | None]], width: int, height: int, 
             while queue:
                 cx, cy = queue.popleft()
                 cells.append((cx, cy))
-                for nx, ny in ((cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)):
+                for dx, dy in NEIGHBORS:
+                    nx = cx + dx
+                    ny = cy + dy
                     if 0 <= nx < width and 0 <= ny < height and not seen[ny][nx] and class_map[ny][nx] == kind:
                         seen[ny][nx] = True
                         queue.append((nx, ny))
@@ -179,15 +206,22 @@ def make_preview(source: Image.Image, class_map: list[list[str | None]], width: 
 
 
 def write_outputs(room: str, image_path: Path, output_dir: Path, sample: int) -> None:
-    source = Image.open(image_path)
+    room_name = normalize_room_name(room)
+
+    # Pillow opens images lazily. Copy the decoded image while the file handle is
+    # open so the rest of the pipeline does not keep the source file locked.
+    with Image.open(image_path) as opened:
+        opened.load()
+        source = opened.convert("RGBA")
+
     class_map, grid_width, grid_height = load_class_map(source, sample)
     components = find_components(class_map, grid_width, grid_height, sample)
 
-    room_dir = output_dir / room.upper()
+    room_dir = output_dir / room_name
     room_dir.mkdir(parents=True, exist_ok=True)
 
     data = {
-        "room": room.upper(),
+        "room": room_name,
         "source_image": str(image_path),
         "image_size": {"width": source.width, "height": source.height},
         "analysis_grid": {"width": grid_width, "height": grid_height, "sample_pixels": sample},
@@ -203,14 +237,14 @@ def write_outputs(room: str, image_path: Path, output_dir: Path, sample: int) ->
     }
 
     (room_dir / "analysis.json").write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    (room_dir / "README.md").write_text(make_readme(room, data), encoding="utf-8")
+    (room_dir / "README.md").write_text(make_readme(room_name, data), encoding="utf-8")
     preview = make_preview(source, class_map, grid_width, grid_height, sample, components)
     preview.save(room_dir / "preview.png")
 
     print(f"Created sketch draft: {room_dir}")
-    print(f"- analysis.json")
-    print(f"- README.md")
-    print(f"- preview.png")
+    print("- analysis.json")
+    print("- README.md")
+    print("- preview.png")
     print("")
     print("Detected:")
     for key, value in data["counts"].items():
@@ -277,7 +311,11 @@ def main(argv: list[str]) -> int:
         print("--sample must be at least 1", file=sys.stderr)
         return 1
 
-    write_outputs(args.room, image_path, Path(args.output).resolve(), args.sample)
+    try:
+        write_outputs(args.room, image_path, Path(args.output).resolve(), args.sample)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
     return 0
 
 
