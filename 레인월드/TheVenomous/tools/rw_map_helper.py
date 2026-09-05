@@ -12,7 +12,6 @@ This tool does not replace Rained. It helps after Rained export:
 from __future__ import annotations
 
 import argparse
-import os
 import re
 import shutil
 import sys
@@ -55,6 +54,18 @@ def normalize_room_name(name: str, region: str) -> str:
     if not cleaned.startswith(prefix):
         cleaned = prefix + cleaned
     return cleaned
+
+
+def unique_in_order(items: list[str]) -> list[str]:
+    """Return values once, while keeping the order used in the world file."""
+    seen: set[str] = set()
+    result: list[str] = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.add(item)
+        result.append(item)
+    return result
 
 
 def expected_room_txt(room: str, region: str) -> Path:
@@ -122,8 +133,19 @@ def validate(region: str) -> int:
 
     rooms = parse_world(region)
     room_names = {room.name for room in rooms}
+    first_room_line: dict[str, int] = {}
 
     for room in rooms:
+        # Duplicate declarations are easy to miss in a long region file and can
+        # make connection debugging confusing, so report the second declaration.
+        if room.name in first_room_line:
+            errors.append(
+                f"line {room.line_no}: duplicate room declaration: {room.name} "
+                f"(first declared on line {first_room_line[room.name]})"
+            )
+        else:
+            first_room_line[room.name] = room.line_no
+
         if "-" in room.name:
             errors.append(f"line {room.line_no}: use underscore, not hyphen: {room.name}")
         if not room.name.startswith(region + "_"):
@@ -139,6 +161,20 @@ def validate(region: str) -> int:
             warnings.append(f"{room.name}: missing settings file: {settings.name}")
         if not pngs:
             warnings.append(f"{room.name}: no camera png found, expected {room.name.lower()}_1.png")
+
+        if room.name in room.connections:
+            errors.append(f"line {room.line_no}: room connects to itself: {room.name}")
+
+        duplicate_connections = [
+            name
+            for name in unique_in_order(room.connections)
+            if room.connections.count(name) > 1
+        ]
+        for duplicate in duplicate_connections:
+            warnings.append(
+                f"line {room.line_no}: duplicate connection can be removed: "
+                f"{room.name} -> {duplicate}"
+            )
 
         for other in room.connections:
             if other not in room_names:
@@ -180,11 +216,30 @@ def add_room(region: str, room: str, connects: str, shelter: bool) -> int:
         raise FileNotFoundError(f"world file not found: {path}")
 
     rooms = parse_world(region)
-    if room_name in {line.name for line in rooms}:
+    existing_names = {line.name for line in rooms}
+    if room_name in existing_names:
         print(f"{room_name} is already listed in {path.name}.")
         return 0
 
-    connection_names = [normalize_room_name(item, region) for item in connects.split(",") if item.strip()]
+    connection_names = unique_in_order(
+        [normalize_room_name(item, region) for item in connects.split(",") if item.strip()]
+    )
+
+    # Validate requested links before editing the world file. A typo should not
+    # leave a half-added room behind and force a manual repair afterwards.
+    if room_name in connection_names:
+        print(f"Cannot add {room_name}: a room cannot connect to itself.", file=sys.stderr)
+        print("Nothing was changed.", file=sys.stderr)
+        return 1
+
+    missing_connections = [name for name in connection_names if name not in existing_names]
+    if missing_connections:
+        print(f"Cannot add {room_name}: unknown connection target(s):", file=sys.stderr)
+        for name in missing_connections:
+            print(f"- {name}", file=sys.stderr)
+        print("Nothing was changed.", file=sys.stderr)
+        return 1
+
     new_line = room_name
     if connection_names:
         new_line += " : " + ", ".join(connection_names)
